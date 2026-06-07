@@ -7,14 +7,8 @@ using StochasticDominance
 using JuMP, Ipopt
 import MathOptInterface as MOI
 
-# =========================================================
-# 0. 固定随机种子
-# =========================================================
 Random.seed!(1234)
 
-# =========================================================
-# 1. 参数设置
-# =========================================================
 
 sourcefile = joinpath(@__DIR__, "ff12_selected5_all_months.csv")
 windowfile = joinpath(@__DIR__, "ff12_selected5_last36.csv")
@@ -30,8 +24,6 @@ eps_tol = 1e-8
 max_iter_try = 800
 n_particles_try = 600
 
-# 如果之后想按论文 Table 3 的口径手工填 3，
-# 就把 nothing 改成 3
 high_order_constraints_manual = 3
 
 # Post-Kopa baseline 参数
@@ -50,9 +42,6 @@ nontrivial_eps = 1e-6
 # active TSD risk levels 数值容差
 active_level_atol = 1e-8
 
-# =========================================================
-# 2. 读取全样本并截取最近 36 个月
-# =========================================================
 
 df_all = CSV.read(sourcefile, DataFrame)
 
@@ -200,8 +189,7 @@ end
 - 找到达到最大值 g_bar 的那些 t
 - 去重后返回其个数和具体值
 
-这里统计的是“当前 GitHub 实现口径下的活跃风险水平个数”，
-不是论文 Table 3 模型层面的固定常数。
+这里统计的是当前口径下的活跃风险水平个数，不是论文 Table 3 模型层面的固定常数。
 """
 function extract_active_tsd_levels(x, ξ, ξ_0, SDorder, p_ξ, p_ξ_0; atol=1e-8)
     p = SDorder - 1.0
@@ -277,7 +265,7 @@ function try_optimize_high_order_order(ξ, ξ_0, SDorder, p;
 end
 
 # =========================================================
-# 5. Post-Kopa baseline（SCTSD / convex QCP）
+# 5. Post-Kopa baseline
 # =========================================================
 
 function solve_post_kopa_baseline(
