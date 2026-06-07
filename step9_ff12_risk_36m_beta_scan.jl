@@ -16,7 +16,7 @@ windowfile = joinpath(@__DIR__, "ff12_selected5_last36.csv")
 n_keep = 36
 SDorder = 2
 
-# 论文 Table 1 风格：固定 second-order，比较不同 β
+# 固定 second-order，比较不同 β
 β_list = [0.1, 0.5, 0.8]
 
 # 包接口需要额外指定 r
