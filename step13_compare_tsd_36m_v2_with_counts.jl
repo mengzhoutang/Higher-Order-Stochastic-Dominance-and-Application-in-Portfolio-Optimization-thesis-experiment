@@ -30,7 +30,7 @@ eps_tol = 1e-8
 max_iter_try = 800
 n_particles_try = 600
 
-# 如果你之后想按论文 Table 3 的口径手工填 3，
+# 如果之后想按论文 Table 3 的口径手工填 3，
 # 就把 nothing 改成 3
 high_order_constraints_manual = 3
 
