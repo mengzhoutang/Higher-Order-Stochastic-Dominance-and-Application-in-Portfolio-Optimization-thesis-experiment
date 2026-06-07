@@ -4,11 +4,6 @@ Pkg.instantiate()
 
 using CSV, DataFrames, Printf
 
-# =========================================================
-# Table 1
-# 来源：step9_table1_like.csv
-# 保留真实资产名：NoDur, Manuf, BusEq, Shops, Hlth
-# =========================================================
 df1 = CSV.read("step9_table1_like.csv", DataFrame)
 
 # 统一列名显示
@@ -26,11 +21,6 @@ end
 CSV.write("Table1_final.csv", df1)
 println("Saved: Table1_final.csv")
 
-# =========================================================
-# Table 3
-# 来源：table3_like.csv
-# 保留真实资产名：NoDur, Manuf, BusEq, Shops, Hlth
-# =========================================================
 df3 = CSV.read("table3_like.csv", DataFrame)
 
 rename!(df3, Dict(
@@ -39,7 +29,6 @@ rename!(df3, Dict(
     "post_kopa" => "Post and Kopa (2017)"
 ))
 
-# 做成适合直接复制进 Word 的显示版
 table3_display = DataFrame(
     asset = String[],
     our = String[],
