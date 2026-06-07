@@ -14,19 +14,12 @@ default(
     linewidth = 1.5
 )
 
-# --------------------------------------------------
-# benchmark 平均收益（上图水平线）
-# --------------------------------------------------
 function benchmark_mean(windowfile::String)
     df = CSV.read(windowfile, DataFrame)
     benchmark = Vector{Float64}(df[:, end])
     return mean(benchmark)
 end
 
-# --------------------------------------------------
-# 把权重表转成 cumulative bands
-# bottom_to_top: 从下往上的资产顺序
-# --------------------------------------------------
 function cumulative_bands(weightsfile::String; bottom_to_top::Vector{String})
     w = CSV.read(weightsfile, DataFrame)
 
@@ -55,9 +48,6 @@ function cumulative_bands(weightsfile::String; bottom_to_top::Vector{String})
     return x, xtlbl, lower, upper
 end
 
-# --------------------------------------------------
-# 下图：累计填充面积图
-# --------------------------------------------------
 function cumulative_area_plot(weightsfile::String; bottom_to_top::Vector{String})
     x, xtlbl, lower, upper = cumulative_bands(weightsfile; bottom_to_top = bottom_to_top)
 
@@ -100,17 +90,13 @@ function cumulative_area_plot(weightsfile::String; bottom_to_top::Vector{String}
     return p
 end
 
-# --------------------------------------------------
-# 上图：objective + benchmark
-# --------------------------------------------------
 function objective_plot(summaryfile::String, windowfile::String; figtitle::String="")
     s = CSV.read(summaryfile, DataFrame)
 
     x = 1:nrow(s)
     xtlbl = ["2nd", "3rd", "5th", "10th", "15th", "20th", "∞"]
 
-    # 如果你想像论文示意图那样显示 0.2~0.35 这种量级，就别乘100
-    # 如果想显示 1.6%~1.9%，改成 100 .* s.objective
+
     obj = 100 .* s.objective
     bm = 100 * benchmark_mean(windowfile)
     bm_line = fill(bm, nrow(s))
@@ -144,9 +130,7 @@ function objective_plot(summaryfile::String, windowfile::String; figtitle::Strin
     return p
 end
 
-# --------------------------------------------------
-# Figure 6 风格两联图
-# --------------------------------------------------
+
 function plot_figure6_style(summaryfile::String, weightsfile::String, windowfile::String, outfile::String;
                             figtitle::String="",
                             bottom_to_top::Vector{String})
@@ -163,9 +147,7 @@ function plot_figure6_style(summaryfile::String, weightsfile::String, windowfile
     println("Saved figure to: ", outfile)
 end
 
-# --------------------------------------------------
-# 22个月：从下往上 Shops, Hlth, NoDur, BusEq, Manuf
-# --------------------------------------------------
+
 plot_figure6_style(
     "step8_summary_with_inf.csv",
     "step8_weights_with_inf.csv",
@@ -175,9 +157,7 @@ plot_figure6_style(
     bottom_to_top = ["Shops", "Hlth", "NoDur", "BusEq", "Manuf"]
 )
 
-# --------------------------------------------------
-# 36个月：从下往上 Hlth, Manuf, Shops, NoDur, BusEq
-# --------------------------------------------------
+
 plot_figure6_style(
     "step7_summary_with_inf.csv",
     "step7_weights_with_inf.csv",
