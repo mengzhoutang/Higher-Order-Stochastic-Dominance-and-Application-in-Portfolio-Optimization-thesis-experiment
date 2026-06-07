@@ -1,0 +1,3 @@
+Method,Objective,AuxParam,TSD_Constraint_Count,Active_TSD_Risk_Level_Count,Active_TSD_Risk_Levels,Max_TSD_Violation,Min_Nontrivial_TSD_Gap,SolverStatus
+high_order_after_dummy_order2,0.016287605880768097,t_opt=-0.22867541,3,1,-0.0565000000,0.0,3.71865199817028e-9,package_internal
+PostKopa_SCTSD_threshold=equal25,0.01683076881048283,m=25,927,,,0.0,3.71865199817028e-9,LOCALLY_SOLVED
